@@ -31,7 +31,7 @@ import com.balda.tokens.RefreshToken;
 import com.balda.tokens.TokenPayload;
 import com.balda.tokens.TokenType;
 
-public abstract class DummyTokenServlet extends TokenServlet {
+public class DummyTokenServlet extends TokenServlet {
 
 	/**
 	 * 
