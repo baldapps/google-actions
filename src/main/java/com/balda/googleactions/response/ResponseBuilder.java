@@ -61,8 +61,8 @@ public class ResponseBuilder {
 	 * @return {@link RootResponse} object that uses speech response to ask user
 	 *         for additional data
 	 */
-	public static RootResponse tell(SpeechElement message) {
-		return tell(message, null);
+	public static RootResponse ask(SpeechElement message) {
+		return ask(message, null);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class ResponseBuilder {
 	 * @return {@link RootResponse} object that uses speech response to ask user
 	 *         for additional data
 	 */
-	public static RootResponse tell(SpeechElement message, String conversationToken) {
+	public static RootResponse ask(SpeechElement message, String conversationToken) {
 		RootResponse rootResponse = new RootResponse();
 		rootResponse.setExpectUserResponse(true);
 		rootResponse.setConversationToken(conversationToken);

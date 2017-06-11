@@ -27,7 +27,6 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 import com.balda.AppConfiguration;
-import com.balda.googleactions.response.RootResponse;
 import com.google.api.client.util.Base64;
 
 /**
@@ -35,7 +34,7 @@ import com.google.api.client.util.Base64;
  * the user words.
  *
  */
-public class DummyApiAiServlet extends AIWebhookServlet<RootResponse> {
+public class DummyApiAiServlet extends AIWebhookServlet<GoogleData> {
 
 	/**
 	 * 
@@ -44,7 +43,7 @@ public class DummyApiAiServlet extends AIWebhookServlet<RootResponse> {
 	private static final Logger log = Logger.getLogger(DummyApiAiServlet.class.getName());
 
 	@Override
-	protected void doWebhook(AIWebhookRequest request, AIWebhookResponse<RootResponse> response) {
+	protected void doWebhook(AIWebhookRequest request, AIWebhookResponse<GoogleData> response) {
 		response.getFulfillment().setSpeech("you said " + request.getResult().getResolvedQuery());
 		response.getFulfillment().setDisplayText("you said " + request.getResult().getResolvedQuery());
 	}

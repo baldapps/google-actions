@@ -20,15 +20,11 @@
 package com.balda.googleactions.response;
 
 import java.util.List;
-import java.util.Map;
 
-import com.balda.apiai.ApiAiPlugData;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class RootResponse implements ApiAiPlugData {
+public class RootResponse {
 
 	@SerializedName("conversationToken")
 	@Expose
@@ -79,13 +75,5 @@ public class RootResponse implements ApiAiPlugData {
 
 	public void setFinalResponse(FinalResponse finalResponse) {
 		this.finalResponse = finalResponse;
-	}
-
-	@Override
-	public void toJson(Gson json, Map<String, JsonElement> m) {
-		m.put("conversation_token", json.toJsonTree(conversationToken));
-		m.put("expect_user_response", json.toJsonTree(expectUserResponse));
-		m.put("expected_inputs", json.toJsonTree(expectedInputs));
-		m.put("final_response", json.toJsonTree(finalResponse));
 	}
 }
