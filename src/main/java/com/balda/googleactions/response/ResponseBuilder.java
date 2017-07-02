@@ -58,6 +58,54 @@ public class ResponseBuilder {
 	/**
 	 * @param message
 	 *            - speech response for Google Actions request
+	 * @return {@link RootResponse} object that contains speech response for
+	 *         Google Actions request
+	 */
+	public static RootResponse replyWithCard(SpeechElement message, String cardTitle, String cardText,
+			String buttonTitle, String url) {
+		RootResponse rootResponse = new RootResponse();
+		rootResponse.setExpectUserResponse(false);
+		List<ExpectedInput> expectedInputs = new ArrayList<>();
+		rootResponse.setExpectedInputs(expectedInputs);
+
+		ExpectedInput expectedInput = new ExpectedInput();
+		expectedInput.setInputPrompt(new InputPrompt());
+		expectedInput.getInputPrompt().setRichInitialPrompt(new RichResponse());
+		List<Item> items = new ArrayList<>();
+		Item i = new Item();
+		SimpleRespose s = new SimpleRespose();
+		if (!message.isSsml())
+			s.setTextToSpeech(message.getTts());
+		else
+			s.setSsml(message.getTts());
+		i.setSimpleRespose(s);
+		items.add(i);
+
+		i = new Item();
+		BasicCard card = new BasicCard();
+		card.setTitle(cardTitle);
+		card.setFormattedText(cardText);
+		Button button = new Button();
+		button.setTitle(buttonTitle);
+		OpenUrlAction openUrlAction = new OpenUrlAction();
+		openUrlAction.setUrl(url);
+		button.setOpenUrlAction(openUrlAction);
+		card.setButtons(Collections.singletonList(button));
+		i.setBasicCard(card);
+		items.add(i);
+
+		expectedInput.getInputPrompt().getRichInitialPrompt().setItems(items);
+
+		expectedInput.setPossibleIntents(new ArrayList<ExpectedIntent>());
+		expectedInput.getPossibleIntents().add(new ExpectedIntent(Intent.TEXT.getAction()));
+
+		rootResponse.getExpectedInputs().add(expectedInput);
+		return rootResponse;
+	}
+
+	/**
+	 * @param message
+	 *            - speech response for Google Actions request
 	 * @return {@link RootResponse} object that uses speech response to ask user
 	 *         for additional data
 	 */
@@ -90,7 +138,7 @@ public class ResponseBuilder {
 			s.setSsml(message.getTts());
 		s.setDisplayText(message.getPrompt());
 		i.setSimpleRespose(s);
-		expectedInput.getInputPrompt().getRichInitialPrompt().setItems(Collections.singletonList(new Item()));
+		expectedInput.getInputPrompt().getRichInitialPrompt().setItems(Collections.singletonList(i));
 
 		expectedInput.setPossibleIntents(new ArrayList<ExpectedIntent>());
 		expectedInput.getPossibleIntents().add(new ExpectedIntent(Intent.TEXT.getAction()));
@@ -233,11 +281,11 @@ public class ResponseBuilder {
 	public static RootResponse askPermissions(String permissionContext, List<Permission> permissions)
 			throws IllegalArgumentException {
 		if (TextUtils.isEmpty(permissionContext)) {
-			throw new IllegalArgumentException("context cannot be null");
+			throw new IllegalArgumentException("permissionContext argument cannot be null");
 		}
 
 		if (permissions == null || permissions.isEmpty()) {
-			throw new IllegalArgumentException("at least one permission needed.");
+			throw new IllegalArgumentException("At least one permission needed.");
 		}
 
 		RootResponse rootResponse = new RootResponse();

@@ -27,7 +27,7 @@ public class RejectionInfo {
 	@SerializedName("type")
 	@Expose
 	private ReasonType type;
-	@SerializedName("type")
+	@SerializedName("reason")
 	@Expose
 	private String reason;
 

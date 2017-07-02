@@ -25,7 +25,7 @@ public class OrderState {
 	@SerializedName("state")
 	@Expose
 	private String state;
-	@SerializedName("state")
+	@SerializedName("label")
 	@Expose
 	private String label;
 

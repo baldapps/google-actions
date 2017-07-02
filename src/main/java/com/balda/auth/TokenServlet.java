@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -38,6 +39,11 @@ public abstract class TokenServlet extends Oauth2BaseServlet {
 	private static final Logger log = Logger.getLogger(TokenServlet.class.getName());
 
 	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
+	}
+
+	@Override
 	public void request(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		Oauth2Request oauth2;
 		try {
@@ -49,7 +55,7 @@ public abstract class TokenServlet extends Oauth2BaseServlet {
 		}
 
 		if (AppConfiguration.CLIENT_ID.equals(oauth2.getClientId())
-				&& AppConfiguration.REDIRECT_URI.equals(oauth2.getRedirectUri())) {
+				&& AppConfiguration.CLIENT_SECRET.equals(oauth2.getRedirectUri())) {
 			try {
 				if (oauth2.isCodeRequest())
 					manageAuthToken(oauth2, req, resp);

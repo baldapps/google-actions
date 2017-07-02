@@ -51,7 +51,18 @@ public abstract class Oauth2BaseServlet extends HttpServlet {
 	}
 
 	@Override
-	protected final void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		/* Only HTTPS traffic is allowed */
+		if (!req.isSecure()) {
+			resp.sendError(HttpServletResponse.SC_FORBIDDEN);
+			log.warning("Received request http from: " + req.getRemoteAddr() + ":" + req.getRemoteHost());
+			return;
+		}
+		request(req, resp);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		/* Only HTTPS traffic is allowed */
 		if (!req.isSecure()) {
 			resp.sendError(HttpServletResponse.SC_FORBIDDEN);

@@ -75,7 +75,7 @@ public abstract class AIWebhookServlet<T extends ApiAiPlugData> extends HttpServ
 		}
 		response.setCharacterEncoding(RESPONSE_CHARACTER_ENCODING);
 		response.setContentType(RESPONSE_CONTENT_TYPE);
-		String json = gson.toJson(output);
+		String json = output.toJson(gson);
 		response.getWriter().write(json);
 		response.getWriter().flush();
 	}

@@ -27,10 +27,10 @@ public class LineItemUpdate {
 	@SerializedName("orderState")
 	@Expose
 	private OrderState orderState;
-	@SerializedName("orderState")
+	@SerializedName("price")
 	@Expose
 	private Price price;
-	@SerializedName("orderState")
+	@SerializedName("reason")
 	@Expose
 	private String reason;
 

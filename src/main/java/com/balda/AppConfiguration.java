@@ -34,6 +34,11 @@ public class AppConfiguration {
 	public static final String CLIENT_ID = "REPLACE YOUR ID HERE";
 
 	/**
+	 * Client secret created via Google console, Oauth2 id web application
+	 */
+	public static final String CLIENT_SECRET = "REPLACE YOUR SECRET HERE";
+
+	/**
 	 * Redirect URI allowed. This uri must be whitelisted in your Google cloud
 	 * console
 	 */

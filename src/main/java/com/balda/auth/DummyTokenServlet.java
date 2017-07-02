@@ -84,12 +84,12 @@ public class DummyTokenServlet extends TokenServlet {
 		 * avoid compiler errors, but you need to change this code.
 		 */
 		TokenPayload payload = TokenGenerator.revert(gson, oauth2.getCode(), null);
-		if (payload.getExpirationTime() < System.currentTimeMillis()) {
+		if (payload.getType() != TokenType.REFRESH_TOKEN) {
 			sendError(resp, Oauth2Error.INVALID_GRANT);
 			return;
 		}
 		RefreshToken refreshToken = new RefreshToken();
-		payload.setExpirationTime(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(60));
+		payload.setExpirationTime(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(1));
 		payload.setType(TokenType.ACCESS_TOKEN);
 		/*
 		 * TODO: we need to genereta a token here, we need to manage a key or
@@ -97,7 +97,7 @@ public class DummyTokenServlet extends TokenServlet {
 		 * avoid compiler errors, but you need to change this code.
 		 */
 		refreshToken.setAccessToken(TokenGenerator.generate(gson, payload, null));
-		refreshToken.setExpirationTime(TimeUnit.DAYS.toSeconds(60));
+		refreshToken.setExpirationTime(TimeUnit.HOURS.toSeconds(1));
 		resp.setCharacterEncoding(RESPONSE_CHARACTER_ENCODING);
 		resp.setContentType(RESPONSE_CONTENT_TYPE);
 		String json = gson.toJson(refreshToken);
