@@ -23,9 +23,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Item {
-	@SerializedName("simpleRespose")
+	@SerializedName("simpleResponse")
 	@Expose
-	private SimpleRespose simpleRespose;
+	private SimpleResponse simpleRespose;
 	@SerializedName("basicCard")
 	@Expose
 	private BasicCard basicCard;
@@ -33,7 +33,7 @@ public class Item {
 	@Expose
 	private StructuredResponse structuredResponse;
 
-	public SimpleRespose getSimpleRespose() {
+	public SimpleResponse getSimpleRespose() {
 		return simpleRespose;
 	}
 
@@ -53,7 +53,7 @@ public class Item {
 		this.structuredResponse = structuredResponse;
 	}
 
-	public void setSimpleRespose(SimpleRespose simpleRespose) {
+	public void setSimpleRespose(SimpleResponse simpleRespose) {
 		this.simpleRespose = simpleRespose;
 	}
 

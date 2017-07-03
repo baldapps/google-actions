@@ -58,6 +58,59 @@ public class ResponseBuilder {
 	/**
 	 * @param message
 	 *            - speech response for Google Actions request
+	 * @param suggestions
+	 *            list of suggestions
+	 * @return {@link RootResponse} object that contains speech response for
+	 *         Google Actions request
+	 * @throws IllegalArgumentException
+	 *             if suggestions are greater than 8
+	 */
+	public static RootResponse replyWithSuggestions(SpeechElement message, String... suggestions) {
+		if (suggestions.length > 8) {
+			throw new IllegalArgumentException("max number of suggestions is 8");
+		}
+
+		RootResponse rootResponse = new RootResponse();
+		rootResponse.setExpectUserResponse(true);
+		List<ExpectedInput> expectedInputs = new ArrayList<>();
+		rootResponse.setExpectedInputs(expectedInputs);
+
+		ExpectedInput expectedInput = new ExpectedInput();
+		expectedInput.setInputPrompt(new InputPrompt());
+		expectedInput.getInputPrompt().setRichInitialPrompt(new RichResponse());
+		List<Item> items = new ArrayList<>();
+		Item i = new Item();
+		SimpleResponse s = new SimpleResponse();
+		if (!message.isSsml())
+			s.setTextToSpeech(message.getTts());
+		else
+			s.setSsml(message.getTts());
+		s.setDisplayText(message.getPrompt());
+		i.setSimpleRespose(s);
+		items.add(i);
+		expectedInput.getInputPrompt().getRichInitialPrompt().setItems(items);
+
+		if (suggestions.length > 0) {
+			List<Suggestion> sugs = new ArrayList<>();
+			for (String sg : suggestions) {
+				Suggestion sug = new Suggestion();
+				sug.setSuggestion(sg);
+				sugs.add(sug);
+			}
+			if (sugs.size() > 0)
+				expectedInput.getInputPrompt().getRichInitialPrompt().setSuggestions(sugs);
+		}
+
+		expectedInput.setPossibleIntents(new ArrayList<ExpectedIntent>());
+		expectedInput.getPossibleIntents().add(new ExpectedIntent(Intent.TEXT.getAction()));
+
+		rootResponse.getExpectedInputs().add(expectedInput);
+		return rootResponse;
+	}
+
+	/**
+	 * @param message
+	 *            - speech response for Google Actions request
 	 * @return {@link RootResponse} object that contains speech response for
 	 *         Google Actions request
 	 */
@@ -73,11 +126,12 @@ public class ResponseBuilder {
 		expectedInput.getInputPrompt().setRichInitialPrompt(new RichResponse());
 		List<Item> items = new ArrayList<>();
 		Item i = new Item();
-		SimpleRespose s = new SimpleRespose();
+		SimpleResponse s = new SimpleResponse();
 		if (!message.isSsml())
 			s.setTextToSpeech(message.getTts());
 		else
 			s.setSsml(message.getTts());
+		s.setDisplayText(message.getPrompt());
 		i.setSimpleRespose(s);
 		items.add(i);
 
@@ -85,6 +139,7 @@ public class ResponseBuilder {
 		BasicCard card = new BasicCard();
 		card.setTitle(cardTitle);
 		card.setFormattedText(cardText);
+
 		Button button = new Button();
 		button.setTitle(buttonTitle);
 		OpenUrlAction openUrlAction = new OpenUrlAction();
@@ -131,7 +186,7 @@ public class ResponseBuilder {
 		expectedInput.setInputPrompt(new InputPrompt());
 		expectedInput.getInputPrompt().setRichInitialPrompt(new RichResponse());
 		Item i = new Item();
-		SimpleRespose s = new SimpleRespose();
+		SimpleResponse s = new SimpleResponse();
 		if (!message.isSsml())
 			s.setTextToSpeech(message.getTts());
 		else
@@ -175,7 +230,7 @@ public class ResponseBuilder {
 		expectedInput.setInputPrompt(new InputPrompt());
 		expectedInput.getInputPrompt().setRichInitialPrompt(new RichResponse());
 		Item i = new Item();
-		SimpleRespose s = new SimpleRespose();
+		SimpleResponse s = new SimpleResponse();
 		if (!message.isSsml())
 			s.setTextToSpeech(message.getTts());
 		else
@@ -220,7 +275,7 @@ public class ResponseBuilder {
 		expectedInput.setInputPrompt(new InputPrompt());
 		expectedInput.getInputPrompt().setRichInitialPrompt(new RichResponse());
 		Item i = new Item();
-		SimpleRespose s = new SimpleRespose();
+		SimpleResponse s = new SimpleResponse();
 		s.setTextToSpeech("");
 		i.setSimpleRespose(s);
 		expectedInput.getInputPrompt().getRichInitialPrompt().setItems(Collections.singletonList(i));

@@ -21,7 +21,7 @@ package com.balda.googleactions.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class SimpleRespose {
+public class SimpleResponse {
 	@SerializedName("textToSpeech")
 	@Expose
 	private String textToSpeech;
