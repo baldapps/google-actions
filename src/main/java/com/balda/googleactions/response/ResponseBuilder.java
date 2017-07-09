@@ -349,13 +349,11 @@ public class ResponseBuilder {
 		ExpectedIntent expectedIntent = new ExpectedIntent(Intent.PERMISSION.getAction());
 		Map<String, JsonElement> map = new HashMap<>();
 
-		map.put("@type", new JsonPrimitive(Intent.DATETIME.getType()));
+		map.put("@type", new JsonPrimitive(Intent.PERMISSION.getType()));
 		map.put("optContext", new JsonPrimitive(permissionContext));
 		JsonArray jarr = new JsonArray();
 		for (Permission p : permissions) {
-			JsonObject jobj = new JsonObject();
-			jobj.addProperty("permissions", p.name());
-			jarr.add(jobj);
+			jarr.add(new JsonPrimitive(p.name()));
 		}
 		map.put("permissions", jarr);
 		expectedIntent.setInputValueSpec(map);
@@ -363,6 +361,15 @@ public class ResponseBuilder {
 		ExpectedInput expectedInput = new ExpectedInput();
 		expectedInput.setPossibleIntents(new ArrayList<ExpectedIntent>());
 		expectedInput.getPossibleIntents().add(expectedIntent);
+
+		expectedInput.setInputPrompt(new InputPrompt());
+		expectedInput.getInputPrompt().setRichInitialPrompt(new RichResponse());
+		Item i = new Item();
+		SimpleResponse s = new SimpleResponse();
+		s.setTextToSpeech(permissionContext);
+		s.setDisplayText(permissionContext);
+		i.setSimpleRespose(s);
+		expectedInput.getInputPrompt().getRichInitialPrompt().setItems(Collections.singletonList(i));
 
 		rootResponse.setExpectedInputs(new ArrayList<ExpectedInput>());
 		rootResponse.getExpectedInputs().add(expectedInput);

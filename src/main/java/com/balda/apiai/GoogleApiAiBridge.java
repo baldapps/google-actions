@@ -1,3 +1,22 @@
+/*
+ * Copyright 2017 Marco Stornelli <playappassistance@gmail.com>
+ * 
+ * This file is part of Google Actions project
+ *
+ * AirTask Desktop is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * AirTask Desktop is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with AirTask Desktop.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.balda.apiai;
 
 import java.util.List;
@@ -17,6 +36,9 @@ import com.google.gson.annotations.SerializedName;
  * fields are don't care.
  */
 public class GoogleApiAiBridge {
+	@SerializedName("expectUserResponse")
+	@Expose
+	private Boolean expectUserResponse;
 	@SerializedName("isSsml")
 	@Expose
 	private Boolean ssml;
@@ -25,16 +47,13 @@ public class GoogleApiAiBridge {
 	private String textTospeech;
 	@SerializedName("systemIntent")
 	@Expose
-	private ExpectedIntent systemIntent;
+	private SystemIntent systemIntent;
 	@SerializedName("richResponse")
 	@Expose
 	private RichResponse richResponse;
 	@SerializedName("finalResponse")
 	@Expose
 	private FinalResponse finalResponse;
-	@SerializedName("expectUserResponse")
-	@Expose
-	private Boolean expectUserResponse;
 
 	public Boolean getExpectUserResponse() {
 		return expectUserResponse;
@@ -60,11 +79,11 @@ public class GoogleApiAiBridge {
 		this.textTospeech = textTospeech;
 	}
 
-	public ExpectedIntent getSystemIntent() {
+	public SystemIntent getSystemIntent() {
 		return systemIntent;
 	}
 
-	public void setSystemIntent(ExpectedIntent systemIntent) {
+	public void setSystemIntent(SystemIntent systemIntent) {
 		this.systemIntent = systemIntent;
 	}
 
@@ -93,11 +112,17 @@ public class GoogleApiAiBridge {
 			ExpectedInput el = l.get(0);
 			if (el != null) {
 				List<ExpectedIntent> li = el.getPossibleIntents();
-				if (li != null && !li.isEmpty())
-					b.setSystemIntent(li.get(0));
+				if (li != null && !li.isEmpty()) {
+					SystemIntent si = new SystemIntent();
+					si.setIntent(li.get(0).getIntent());
+					si.setInputValueSpec(li.get(0).getInputValueSpec());
+					b.setSystemIntent(si);
+				}
 				InputPrompt ip = el.getInputPrompt();
-				if (ip != null)
-					b.setRichResponse(ip.getRichInitialPrompt());
+				if (ip != null) {
+					RichResponse richRespose = ip.getRichInitialPrompt();
+					b.setRichResponse(richRespose);
+				}
 			}
 		}
 		return b;

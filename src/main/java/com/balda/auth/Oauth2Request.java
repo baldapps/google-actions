@@ -58,11 +58,11 @@ public class Oauth2Request {
 				throw new IllegalArgumentException("malformed request");
 		} else if (RESPONSE_TYPE_CODE.equals(responseType)) {
 			// Auth code request
-			if (TextUtils.isEmpty(redirectUri) || TextUtils.isEmpty(state))
+			if (TextUtils.isEmpty(redirectUri))
 				throw new IllegalArgumentException("malformed request");
 		} else if (RESPONSE_TYPE_TOKEN.equals(responseType)) {
 			// Implicit flow request
-			if (TextUtils.isEmpty(redirectUri) || TextUtils.isEmpty(state))
+			if (TextUtils.isEmpty(redirectUri))
 				throw new IllegalArgumentException("malformed request");
 		} else
 			throw new IllegalArgumentException("malformed request");
