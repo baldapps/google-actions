@@ -20,6 +20,7 @@
 package com.balda.apiai;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +28,9 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 import com.balda.AppConfiguration;
+import com.balda.googleactions.response.ResponseBuilder;
+import com.balda.googleactions.response.ResponseBuilder.SpeechElement;
+import com.balda.googleactions.response.RootResponse;
 import com.google.api.client.util.Base64;
 
 /**
@@ -44,8 +48,29 @@ public class DummyApiAiServlet extends AIWebhookServlet<GoogleData> {
 
 	@Override
 	protected void doWebhook(AIWebhookRequest request, AIWebhookResponse<GoogleData> response) {
-		response.getFulfillment().setSpeech("you said " + request.getResult().getResolvedQuery());
-		response.getFulfillment().setDisplayText("you said " + request.getResult().getResolvedQuery());
+		Random r = new Random();
+		if (r.nextBoolean()) {
+			response.getFulfillment().setSpeech("you said " + request.getResult().getResolvedQuery());
+			response.getFulfillment().setDisplayText("you said " + request.getResult().getResolvedQuery());
+		} else {
+			replyWithGoogleData(request, response);
+		}
+	}
+
+	/**
+	 * Example of how to send Google data via Api.Ai
+	 * 
+	 * @param request
+	 * @param response
+	 */
+	private void replyWithGoogleData(AIWebhookRequest request, AIWebhookResponse<GoogleData> response) {
+		response.getFulfillment().setSpeech("how are you?");
+		response.getFulfillment().setDisplayText("how are you?");
+		RootResponse r = ResponseBuilder.ask(new SpeechElement("how are you?"));
+		GoogleData data = new GoogleData();
+		data.setRootResponse(GoogleApiAiBridge.convert(r));
+		response.setCustomData(data);
+		response.getFulfillment().setSource("google");
 	}
 
 	@Override
