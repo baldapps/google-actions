@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.balda.AppConfiguration;
 import com.balda.keys.TokenException;
@@ -38,6 +39,7 @@ public abstract class AuthServlet extends Oauth2BaseServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 4713964796466480055L;
+	protected static final String SESSION_OAUTH2 = "oauth2req";
 
 	private static final Logger log = Logger.getLogger(AuthServlet.class.getName());
 
@@ -45,10 +47,13 @@ public abstract class AuthServlet extends Oauth2BaseServlet {
 	public void request(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		Oauth2Request oauth2;
 		try {
-			oauth2 = new Oauth2Request(req);
+			HttpSession ses = req.getSession();
+			oauth2 = (Oauth2Request) ses.getAttribute(SESSION_OAUTH2);
+			if (oauth2 == null)
+				oauth2 = new Oauth2Request(req);
 		} catch (IllegalArgumentException e) {
 			sendError(resp, Oauth2Error.INVALID_REQUEST);
-			log.warning("Not valid request: " + req.toString());
+			log.log(Level.WARNING, "Not valid request: ", e);
 			return;
 		}
 

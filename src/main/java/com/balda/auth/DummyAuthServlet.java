@@ -26,6 +26,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.balda.keys.TokenGenerator;
 import com.balda.tokens.TokenPayload;
@@ -50,13 +51,19 @@ public class DummyAuthServlet extends AuthServlet {
 			throws IOException {
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
+		HttpSession ses = req.getSession();
 
 		// Check if the user is signed in to your service. If the user
 		// isn't signed in, complete service's sign-in or sign-up
 		// flow.
 		if (user == null) {
+			ses.setAttribute(SESSION_OAUTH2, oauth2);
 			resp.sendRedirect(userService.createLoginURL(req.getRequestURI()));
 		} else {
+			try {
+				ses.invalidate();
+			} catch (Exception e1) {
+			}
 			TokenPayload t = new TokenPayload();
 			t.setType(TokenType.ACCESS_TOKEN);
 			t.setUserId(user.getUserId());
@@ -83,13 +90,19 @@ public class DummyAuthServlet extends AuthServlet {
 			throws IOException {
 		UserService userService = UserServiceFactory.getUserService();
 		User user = userService.getCurrentUser();
+		HttpSession ses = req.getSession();
 
 		// Check if the user is signed in to your service. If the user
 		// isn't signed in, complete service's sign-in or sign-up
 		// flow.
 		if (user == null) {
+			ses.setAttribute(SESSION_OAUTH2, oauth2);
 			resp.sendRedirect(userService.createLoginURL(req.getRequestURI()));
 		} else {
+			try {
+				ses.invalidate();
+			} catch (Exception e1) {
+			}
 			TokenPayload t = new TokenPayload();
 			t.setType(TokenType.AUTH_TOKEN);
 			t.setExpirationTime(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10));
