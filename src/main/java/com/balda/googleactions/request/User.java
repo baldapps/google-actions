@@ -19,6 +19,8 @@
 
 package com.balda.googleactions.request;
 
+import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -33,6 +35,28 @@ public class User {
 	@SerializedName("accessToken")
 	@Expose
 	private String accessToken;
+	@SerializedName("permissions")
+	@Expose
+	private List<String> permissions;
+	@SerializedName("locale")
+	@Expose
+	private String locale;
+
+	public List<String> getPermissions() {
+		return permissions;
+	}
+
+	public void setPermissions(List<String> permissions) {
+		this.permissions = permissions;
+	}
+
+	public String getLocale() {
+		return locale;
+	}
+
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
 
 	public String getUserId() {
 		return userId;
