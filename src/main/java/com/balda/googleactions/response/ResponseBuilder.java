@@ -151,6 +151,53 @@ public class ResponseBuilder {
 
 		expectedInput.getInputPrompt().getRichInitialPrompt().setItems(items);
 
+		rootResponse.getExpectedInputs().add(expectedInput);
+		return rootResponse;
+	}
+
+	/**
+	 * @param message
+	 *            - speech response for Google Actions request
+	 * @return {@link RootResponse} object that contains speech response for
+	 *         Google Actions request
+	 */
+	public static RootResponse askWithCard(SpeechElement message, String cardTitle, String cardText, String buttonTitle,
+			String url) {
+		RootResponse rootResponse = new RootResponse();
+		rootResponse.setExpectUserResponse(true);
+		List<ExpectedInput> expectedInputs = new ArrayList<>();
+		rootResponse.setExpectedInputs(expectedInputs);
+
+		ExpectedInput expectedInput = new ExpectedInput();
+		expectedInput.setInputPrompt(new InputPrompt());
+		expectedInput.getInputPrompt().setRichInitialPrompt(new RichResponse());
+		List<Item> items = new ArrayList<>();
+		Item i = new Item();
+		SimpleResponse s = new SimpleResponse();
+		if (!message.isSsml())
+			s.setTextToSpeech(message.getTts());
+		else
+			s.setSsml(message.getTts());
+		s.setDisplayText(message.getPrompt());
+		i.setSimpleRespose(s);
+		items.add(i);
+
+		i = new Item();
+		BasicCard card = new BasicCard();
+		card.setTitle(cardTitle);
+		card.setFormattedText(cardText);
+
+		Button button = new Button();
+		button.setTitle(buttonTitle);
+		OpenUrlAction openUrlAction = new OpenUrlAction();
+		openUrlAction.setUrl(url);
+		button.setOpenUrlAction(openUrlAction);
+		card.setButtons(Collections.singletonList(button));
+		i.setBasicCard(card);
+		items.add(i);
+
+		expectedInput.getInputPrompt().getRichInitialPrompt().setItems(items);
+
 		expectedInput.setPossibleIntents(new ArrayList<ExpectedIntent>());
 		expectedInput.getPossibleIntents().add(new ExpectedIntent(Intent.TEXT.getAction()));
 
