@@ -41,6 +41,39 @@ public class User {
 	@SerializedName("locale")
 	@Expose
 	private String locale;
+	@SerializedName("lastSeen")
+	@Expose
+	private String lastSeen;
+	@SerializedName("userStorage")
+	@Expose
+	private String userStorage;
+	@SerializedName("packageEntitlements")
+	@Expose
+	private List<PackageEntitlements> packageEntitlements;
+
+	public String getLastSeen() {
+		return lastSeen;
+	}
+
+	public void setLastSeen(String lastSeen) {
+		this.lastSeen = lastSeen;
+	}
+
+	public String getUserStorage() {
+		return userStorage;
+	}
+
+	public void setUserStorage(String userStorage) {
+		this.userStorage = userStorage;
+	}
+
+	public List<PackageEntitlements> getPackageEntitlements() {
+		return packageEntitlements;
+	}
+
+	public void setPackageEntitlements(List<PackageEntitlements> packageEntitlements) {
+		this.packageEntitlements = packageEntitlements;
+	}
 
 	public List<String> getPermissions() {
 		return permissions;

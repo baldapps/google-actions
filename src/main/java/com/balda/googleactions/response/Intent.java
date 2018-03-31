@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Marco Stornelli <playappassistance@gmail.com>
+ * Copyright 2017-2018 Marco Stornelli <playappassistance@gmail.com>
  * 
  * This file is part of Google Actions project
  *
@@ -30,7 +30,9 @@ public enum Intent {
 	DELIVERY_ADDRESS("actions.intent.DELIVERY_ADDRESS", "type.googleapis.com/google.actions.v2.DeliveryAddressValueSpec"),
 	TRANSACTION_REQ_CHECK("actions.intent.TRANSACTION_REQUIREMENTS_CHECK", "type.googleapis.com/google.actions.v2.TransactionRequirementsCheckSpec"),
 	TRANSACTION_DECISION("actions.intent.TRANSACTION_DECISION", "type.googleapis.com/google.actions.v2.TransactionDecisionValueSpec"),
-	CONFIRMATION("actions.intent.confirmation", "type.googleapis.com/google.actions.v2.ConfirmationValueSpec");
+	CONFIRMATION("actions.intent.confirmation", "type.googleapis.com/google.actions.v2.ConfirmationValueSpec"),
+	NEW_SURFACE("actions.intent.NEW_SURFACE", "type.googleapis.com/google.actions.v2.NewSurfaceValueSpec"),
+	REGISTER_UPDATE("actions.intent.REGISTER_UPDATE", "type.googleapis.com/google.actions.v2.RegisterUpdateValueSpec");
 	//@formatter:on
 
 	private String action;
