@@ -7,9 +7,9 @@ for Google actions.
 ## Features
 
 - Google Actions Framework to manage requests and responses
-directly from Google or via Api.Ai
+directly from Google or via DialogFlow
 - Google Actions Api v2
-- Api.Ai end point
+- DialogFlow end point (v1 and v2 support)
 - Account linking Framework implementing implicit flow and
 authorization code flow
 
@@ -18,8 +18,6 @@ authorization code flow
 * Java 7
 * [Maven](https://maven.apache.org/download.cgi) (at least 3.3.9)
 * [Google Cloud SDK](https://cloud.google.com/sdk/) (aka gcloud)
-
-WARNING: Java 7 is REQUIRED when you use JSP's locally.
 
 Initialize the Google Cloud SDK using:
 
