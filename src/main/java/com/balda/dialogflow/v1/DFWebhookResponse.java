@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Marco Stornelli <playappassistance@gmail.com>
+ * Copyright 2017-2018 Marco Stornelli <playappassistance@gmail.com>
  * 
  * This file is part of Google Actions project
  *
@@ -17,22 +17,23 @@
  * along with Google Actions.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.balda.apiai;
+package com.balda.dialogflow.v1;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import com.balda.dialogflow.ApiAiPlugData;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
 import ai.api.model.Fulfillment;
 
-public class AIWebhookResponse<T extends ApiAiPlugData> {
+public class DFWebhookResponse<T extends ApiAiPlugData> {
 
 	private Fulfillment fulfillment;
 	private T customData;
 
-	public AIWebhookResponse() {
+	public DFWebhookResponse() {
 		fulfillment = new Fulfillment();
 		customData = null;
 	}

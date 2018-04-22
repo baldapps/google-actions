@@ -17,7 +17,7 @@
  * along with Google Actions.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.balda.apiai;
+package com.balda.dialogflow;
 
 import java.util.List;
 

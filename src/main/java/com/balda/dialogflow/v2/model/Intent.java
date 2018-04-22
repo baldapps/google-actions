@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Marco Stornelli <playappassistance@gmail.com>
+ * Copyright 2017-2018 Marco Stornelli <playappassistance@gmail.com>
  * 
  * This file is part of Google Actions project
  *
@@ -17,27 +17,34 @@
  * along with Google Actions.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.balda.apiai;
+package com.balda.dialogflow.v2.model;
 
-import com.balda.googleactions.request.OriginalRequest;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import ai.api.model.AIResponse;
+public class Intent {
 
-public class AIWebhookRequest extends AIResponse {
-	private static final long serialVersionUID = 1L;
-
-	@SerializedName("originalRequest")
+	@SerializedName("name")
 	@Expose
-	private OriginalRequest originalRequest;
+	private String name;
+	@SerializedName("displayName")
+	@Expose
+	private String displayName;
 
-	/**
-	 * Get original request object
-	 * 
-	 * @return <code>null</code> if original request undefined in request object
-	 */
-	public OriginalRequest getOriginalRequest() {
-		return originalRequest;
+	public String getName() {
+		return name;
 	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+
 }

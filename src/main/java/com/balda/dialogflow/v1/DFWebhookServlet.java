@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Marco Stornelli <playappassistance@gmail.com>
+ * Copyright 2017-2018 Marco Stornelli <playappassistance@gmail.com>
  * 
  * This file is part of Google Actions project
  *
@@ -17,7 +17,7 @@
  * along with Google Actions.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.balda.apiai;
+package com.balda.dialogflow.v1;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -28,20 +28,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.balda.dialogflow.ApiAiPlugData;
 import com.balda.keys.TokenException;
 import com.google.gson.Gson;
 
 import ai.api.GsonFactory;
 
 /**
- * Base class to be extended to create an api ai webhook
+ * Base class to be extended to create an dialog flow webhook
  *
  * @param <T>
  *            The class for custom data, RootResponse for Google, EmptyPlugData
  *            for none
  */
-public abstract class AIWebhookServlet<T extends ApiAiPlugData> extends HttpServlet {
-	private static final Logger log = Logger.getLogger(AIWebhookServlet.class.getName());
+public abstract class DFWebhookServlet<T extends ApiAiPlugData> extends HttpServlet {
+	private static final Logger log = Logger.getLogger(DFWebhookServlet.class.getName());
 	private static final String RESPONSE_CONTENT_TYPE = "application/json";
 
 	private static final String RESPONSE_CHARACTER_ENCODING = "utf-8";
@@ -61,9 +62,9 @@ public abstract class AIWebhookServlet<T extends ApiAiPlugData> extends HttpServ
 			response.sendError(HttpServletResponse.SC_FORBIDDEN);
 			return;
 		}
-		AIWebhookResponse<T> output = new AIWebhookResponse<>();
+		DFWebhookResponse<T> output = new DFWebhookResponse<>();
 		try {
-			doWebhook(gson.fromJson(request.getReader(), AIWebhookRequest.class), output);
+			doWebhook(gson.fromJson(request.getReader(), DFWebhookRequest.class), output);
 		} catch (TokenException e) {
 			log.log(Level.WARNING, "exception in doWebhook", e);
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -97,5 +98,5 @@ public abstract class AIWebhookServlet<T extends ApiAiPlugData> extends HttpServ
 	 * @param output
 	 *            Response object. Should be filled in the method.
 	 */
-	protected abstract void doWebhook(AIWebhookRequest input, AIWebhookResponse<T> output);
+	protected abstract void doWebhook(DFWebhookRequest input, DFWebhookResponse<T> output);
 }

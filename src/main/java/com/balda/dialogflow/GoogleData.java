@@ -1,4 +1,4 @@
-package com.balda.apiai;
+package com.balda.dialogflow;
 
 import java.util.Map;
 

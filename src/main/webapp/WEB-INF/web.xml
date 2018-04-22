@@ -6,7 +6,7 @@
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 	<servlet>
 		<servlet-name>apiaiendpoint</servlet-name>
-		<servlet-class>com.balda.apiai.DummyApiAiServlet</servlet-class>
+		<servlet-class>com.balda.dialogflow.v1.DummyApiAiServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>authendpoint</servlet-name>

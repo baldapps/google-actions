@@ -17,46 +17,13 @@
  * along with Google Actions.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.balda.apiai;
+package com.balda.dialogflow;
 
 import java.util.Map;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
-public class SystemIntent {
-
-	@SerializedName("intent")
-	@Expose
-	private String intent;
-
-	@SerializedName("data")
-	@Expose
-	private Map<String, JsonElement> inputValueData;
-
-	public SystemIntent() {
-
-	}
-
-	public SystemIntent(String i) {
-		intent = i;
-	}
-
-	public Map<String, JsonElement> getInputValueSpec() {
-		return inputValueData;
-	}
-
-	public void setInputValueSpec(Map<String, JsonElement> inputValueSpec) {
-		this.inputValueData = inputValueSpec;
-	}
-
-	public String getIntent() {
-		return intent;
-	}
-
-	public void setIntent(String intent) {
-		this.intent = intent;
-	}
-
+public interface ApiAiPlugData {
+	void toJson(Gson json, Map<String, JsonElement> map);
 }
