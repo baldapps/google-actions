@@ -32,6 +32,9 @@ public class RootRequest {
 	@SerializedName("device")
 	@Expose
 	private Device device;
+	@SerializedName("surface")
+	@Expose
+	private Surface surface;
 	@SerializedName("conversation")
 	@Expose
 	private Conversation conversation;
@@ -41,6 +44,25 @@ public class RootRequest {
 	@SerializedName("isInSandbox")
 	@Expose
 	private Boolean isInSandbox;
+	@SerializedName("availableSurfaces")
+	@Expose
+	private List<Surface> availableSurfaces;
+
+	public Surface getSurface() {
+		return surface;
+	}
+
+	public void setSurface(Surface surface) {
+		this.surface = surface;
+	}
+
+	public List<Surface> getAvailableSurfaces() {
+		return availableSurfaces;
+	}
+
+	public void setAvailableSurfaces(List<Surface> availableSurfaces) {
+		this.availableSurfaces = availableSurfaces;
+	}
 
 	public Boolean getIsInSandbox() {
 		return isInSandbox;

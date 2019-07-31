@@ -1,6 +1,6 @@
 /*
- * Copyright 2017 Marco Stornelli <playappassistance@gmail.com>
- * 
+ * Copyright 2019 Marco Stornelli <playappassistance@gmail.com>
+ *
  * This file is part of Google Actions project
  *
  * Google Actions is free software: you can redistribute it and/or modify
@@ -19,17 +19,22 @@
 
 package com.balda.googleactions.request;
 
+import java.util.List;
+
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public enum InputType {
-	//@formatter:off
-	@SerializedName("UNSPECIFIED_INPUT_TYPE")
-	UNSPECIFIED_INPUT_TYPE, 
-	@SerializedName("TOUCH")
-	TOUCH, 
-	@SerializedName("VOICE")
-	VOICE, 
-	@SerializedName("KEYBOARD")
-	KEYBOARD
-	//@formatter:on
+public class Surface {
+
+	@SerializedName("capabilities")
+	@Expose
+	private List<Capability> capabilities;
+
+	public List<Capability> getCapabilities() {
+		return capabilities;
+	}
+
+	public void setCapabilities(List<Capability> capabilities) {
+		this.capabilities = capabilities;
+	}
 }
