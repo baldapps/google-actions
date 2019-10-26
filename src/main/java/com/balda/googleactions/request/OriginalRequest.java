@@ -24,7 +24,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class OriginalRequest {
 
-	@SerializedName("data")
+	@SerializedName("payload")
 	@Expose
 	private RootRequest googleData;
 
