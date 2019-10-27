@@ -48,7 +48,7 @@ public class QueryResult {
 	private Intent intent;
 	@SerializedName("intentDetectionConfidence")
 	@Expose
-	private Integer intentDetectionConfidence;
+	private Float intentDetectionConfidence;
 	@SerializedName("languageCode")
 	@Expose
 	private String languageCode;
@@ -101,11 +101,11 @@ public class QueryResult {
 		this.intent = intent;
 	}
 
-	public Integer getIntentDetectionConfidence() {
+	public Float getIntentDetectionConfidence() {
 		return intentDetectionConfidence;
 	}
 
-	public void setIntentDetectionConfidence(Integer intentDetectionConfidence) {
+	public void setIntentDetectionConfidence(Float intentDetectionConfidence) {
 		this.intentDetectionConfidence = intentDetectionConfidence;
 	}
 
